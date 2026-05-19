@@ -339,7 +339,13 @@ function sendEmail(){
     method:'POST',
     headers:{'Content-Type':'application/json','Accept':'application/json'},
     body:JSON.stringify({name:S.name,email:S.email,message:body})
-  }).then(r=>r.json()).then(d=>console.log('Sent:',d)).catch(e=>console.error(e));
+  }).then(r=>r.json()).then(d=>{
+    console.log('Formspree response:',JSON.stringify(d));
+    alert('Submission result: '+JSON.stringify(d));
+  }).catch(e=>{
+    console.error('Formspree error:',e);
+    alert('Formspree error: '+e.message);
+  });
 }
 
 function showConfirm(){
