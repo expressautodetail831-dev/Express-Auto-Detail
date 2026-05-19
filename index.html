@@ -4,10 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Express Auto Detail — Book Now</title>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--blue:#1a7fe8;--blue-dark:#1260b8;--silver:#c8d6e8}
 body{font-family:sans-serif;background:#000;min-height:100vh;padding:20px}
 .wrap{max-width:700px;margin:0 auto;padding:1.5rem 1rem}
 .header{background:#07090d;border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:16px;border:1px solid #1e2a3a;position:relative;overflow:hidden}
@@ -111,8 +109,6 @@ select option{background:#0a0f17;color:#c8d6e8}
 </div>
 
 <script>
-emailjs.init('PS5XnPSNhtRYUDG_m');
-
 const STEPS=['Your Info','Vehicle','Service','Add-ons','Schedule','Review'];
 const MAKES=['Acura','Audi','BMW','Buick','Cadillac','Chevrolet','Chrysler','Dodge','Ferrari','Ford','GMC','Genesis','Honda','Hyundai','Infiniti','Jeep','Kia','Land Rover','Lexus','Lincoln','Mazda','Mercedes-Benz','Mitsubishi','Nissan','Porsche','RAM','Subaru','Tesla','Toyota','Volkswagen','Volvo','Other'];
 const BODIES={sedan:['Sedan','Coupe','Convertible','Hatchback'],medium:['SUV','Crossover','Minivan','Wagon'],large:['Truck','Full-Size SUV','Full-Size Van','Sprinter Van']};
@@ -338,18 +334,12 @@ function step5(){
 }
 
 function sendEmail(){
-  const params={
-    customer_name:S.name,customer_phone:S.phone,customer_email:S.email,address:S.address,
-    vehicle:`${S.year} ${S.make} ${S.model}`,vehicle_size:`${S.bodyType} (${szLabel(S.vehicleSize)})`,
-    package:PKG[S.pkg]?.name||'—',addons:S.addons.length?S.addons.map(id=>ADDONS[id].name).join(', '):'None',
-    water:S.water?'Available on-site':'Need to bring ($15 fee)',
-    electricity:S.electric?'Available on-site':'Need to bring ($10 fee)',
-    days:S.days.join(', ')||'—',times:S.times.join(', ')||'—',
-    notes:S.notes||'None',total:`$${total()}`
-  };
-  emailjs.send('service_i8ig4rp','template_v0vw4m5',params)
-    .then(()=>console.log('Email sent!'))
-    .catch(err=>console.error('Email error:',err));
+  const body=`New Booking Request!\n\nNAME: ${S.name}\nPHONE: ${S.phone}\nEMAIL: ${S.email}\nADDRESS: ${S.address}\n\nVEHICLE: ${S.year} ${S.make} ${S.model}\nSIZE: ${S.bodyType} (${szLabel(S.vehicleSize)})\n\nSERVICE: ${PKG[S.pkg]?.name||'—'}\nADD-ONS: ${S.addons.length?S.addons.map(id=>ADDONS[id].name).join(', '):'None'}\n\nWATER: ${S.water?'Available on-site':'Need to bring ($15 fee)'}\nELECTRICITY: ${S.electric?'Available on-site':'Need to bring ($10 fee)'}\n\nPREFERRED DAYS: ${S.days.join(', ')||'—'}\nPREFERRED TIMES: ${S.times.join(', ')||'—'}\n\nNOTES: ${S.notes||'None'}\n\nESTIMATED TOTAL: $${total()}`;
+  fetch('https://formspree.io/f/xzdwdeae',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify({name:S.name,email:S.email,message:body})
+  }).then(r=>r.json()).then(d=>console.log('Sent:',d)).catch(e=>console.error(e));
 }
 
 function showConfirm(){
