@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Express Auto Detail — Book Now</title>
-<style>
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:sans-serif;background:#000;min-height:100vh;padding:16px}
 .wrap{max-width:700px;margin:0 auto;padding:1rem;padding-bottom:100px}
@@ -303,21 +303,12 @@ function step3(){
 }
 
 function step4(){
-  const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  const times=['7am – 9am','9am – 11am','11am – 1pm','1pm – 3pm','3pm – 5pm','5pm – 7pm'];
   return`<div class="card">
-    <div class="card-title">📅 Preferred Days</div>
-    <p style="font-size:11px;color:#2a4a6a;margin-bottom:12px;">Select all days that work for you.</p>
-    <div class="days-grid">${days.map(d=>`<div class="day-btn${S.days.includes(d)?' selected':''}" data-day="${d}">${d}</div>`).join('')}</div>
+    <div class="card-title">📅 Pick Your Date & Time</div>
+    <p style="font-size:12px;color:#4a6a8a;margin-bottom:14px;line-height:1.6;">Select a date and time that works for you. Your appointment will be confirmed automatically.</p>
   </div>
-  <div class="card">
-    <div class="card-title">🕐 Preferred Time Windows</div>
-    <p style="font-size:11px;color:#2a4a6a;">Select all times that work for you.</p>
-    <div class="time-grid">${times.map(t=>`<div class="time-btn${S.times.includes(t)?' selected':''}" data-time="${t}">${t}</div>`).join('')}</div>
-  </div>
-  <div class="card">
-    <div class="card-title">📝 Additional Notes <span style="font-size:10px;color:#1a3a6a;font-weight:400;text-transform:none;">(optional)</span></div>
-    <textarea id="f-notes" rows="3" placeholder="Gate codes, pet info, special instructions...">${S.notes}</textarea>
+  <div class="calendly-wrap">
+    <div class="calendly-inline-widget" data-url="https://calendly.com/expressautodetail831/30min?hide_gdpr_banner=1&background_color=07090d&text_color=c8d6e8&primary_color=1a7fe8&hide_event_type_details=1&hide_landing_page_details=1&prefill_name=${encodeURIComponent(S.name)}&prefill_email=${encodeURIComponent(S.email)}&prefill_custom_answers_a1=${encodeURIComponent(S.phone)}" style="min-width:320px;height:700px;"></div>
   </div>
   <div class="nav-row">
     <button class="btn-back" id="btn-back">← Back</button>
@@ -342,9 +333,8 @@ function step5(){
     <div class="sum-row"><span class="sum-label">Body / Size</span><span class="sum-val">${S.bodyType} <span class="size-chip">${szLabel(S.vehicleSize)}</span></span></div>
   </div>
   <div class="card">
-    <div class="card-title">📅 Availability</div>
-    <div class="sum-row"><span class="sum-label">Preferred Days</span><span class="sum-val">${S.days.join(', ')||'—'}</span></div>
-    <div class="sum-row"><span class="sum-label">Preferred Times</span><span class="sum-val">${S.times.join(', ')||'—'}</span></div>
+    <div class="card-title">📅 Appointment</div>
+    <div class="sum-row"><span class="sum-label">Scheduling</span><span class="sum-val" style="color:#1a7fe8;">Booked via Calendly — check your email for confirmation</span></div>
     ${S.notes?`<div class="sum-row"><span class="sum-label">Notes</span><span class="sum-val">${S.notes}</span></div>`:''}
   </div>
   <div class="card">
@@ -443,13 +433,7 @@ function bind(){
     if(next)next.onclick=()=>{S.step++;render();};
   }
   if(S.step===4){
-    document.querySelectorAll('[data-day]').forEach(el=>el.onclick=()=>{const d=el.dataset.day;S.days=S.days.includes(d)?S.days.filter(x=>x!==d):[...S.days,d];el.classList.toggle('selected');});
-    document.querySelectorAll('[data-time]').forEach(el=>el.onclick=()=>{const t=el.dataset.time;S.times=S.times.includes(t)?S.times.filter(x=>x!==t):[...S.times,t];el.classList.toggle('selected');});
-    if(next)next.onclick=()=>{
-      S.notes=document.getElementById('f-notes').value.trim();
-      if(!S.days.length||!S.times.length){alert('Please select at least one preferred day and time.');return;}
-      S.step++;render();
-    };
+    if(next)next.onclick=()=>{S.step++;render();};
   }
 }
 render();
