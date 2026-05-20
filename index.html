@@ -54,21 +54,22 @@ select option{background:#0a0f17;color:#c8d6e8}
 .svc-card.selected .svc-desc{color:#4a6a8a}
 .badge-pop{display:inline-block;font-size:9px;background:#1a7fe8;color:#fff;border-radius:3px;padding:2px 7px;margin-bottom:8px;letter-spacing:1px}
 .pkg-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
-.pkg-card{border:1px solid #1a2538;border-radius:8px;padding:16px;cursor:pointer;background:#0a0f17;transition:all .15s;position:relative;margin-top:10px}
-.pkg-card:hover{border-color:#1a7fe8}
-.pkg-card.selected{border:1.5px solid #1a7fe8;background:rgba(26,127,232,0.06)}
-.pkg-card.pop-card{border-color:#1a7fe8;background:linear-gradient(145deg,#07090d,#0a1628)}
-.pkg-card.pop-card .pkg-name{color:#e8f0fa}
-.pkg-card.pop-card .pkg-price{font-size:22px}
-.pkg-badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:#1a7fe8;color:#fff;font-size:9px;padding:3px 12px;border-radius:20px;letter-spacing:1px;white-space:nowrap}
-.pkg-name{font-size:13px;font-weight:600;color:#c8d6e8;margin-bottom:6px}
-.pkg-price{font-size:20px;font-weight:700;color:#1a7fe8;margin-bottom:10px}
+.pkg-card{border:1px solid #1a2538;border-radius:12px;padding:16px;cursor:pointer;background:#0a0f17;transition:all .2s;position:relative;margin-top:10px}
+.pkg-card:hover{border-color:#1a7fe8;transform:translateY(-1px)}
+.pkg-card.selected{border:2px solid #1a7fe8;background:rgba(26,127,232,0.12);transform:translateY(-1px);box-shadow:0 0 20px rgba(26,127,232,0.2)}
+.pkg-card.pop-card{border-color:#1a3a6a;background:linear-gradient(145deg,#07090d,#0a1628)}
+.pkg-card.pop-card.selected{border:2px solid #1a7fe8;background:rgba(26,127,232,0.15);box-shadow:0 0 24px rgba(26,127,232,0.3)}
+.pkg-selected-check{display:none;position:absolute;top:10px;right:10px;width:22px;height:22px;background:#1a7fe8;border-radius:50%;align-items:center;justify-content:center;font-size:12px;color:#fff}
+.pkg-card.selected .pkg-selected-check{display:flex}
+.pkg-name{font-size:13px;font-weight:700;color:#c8d6e8;margin-bottom:4px;padding-right:28px}
+.pkg-price{font-size:18px;font-weight:700;color:#1a7fe8;margin-bottom:8px}
 .pkg-price-sub{font-size:10px;color:#2a4a6a;font-weight:400;margin-left:2px}
-.pkg-divider{height:1px;background:#1a2538;margin:10px 0}
+.pkg-divider{height:1px;background:#1a2538;margin:8px 0}
 .pkg-features{list-style:none}
-.pkg-features li{font-size:11px;color:#4a6a8a;padding:3.5px 0;display:flex;align-items:flex-start;gap:7px;line-height:1.4}
-.pkg-features li::before{content:'✓';color:#1a7fe8;font-size:11px;flex-shrink:0;margin-top:1px;font-weight:700}
+.pkg-features li{font-size:11px;color:#4a6a8a;padding:2.5px 0;display:flex;align-items:flex-start;gap:6px;line-height:1.4}
+.pkg-features li::before{content:'✓';color:#1a7fe8;font-size:11px;flex-shrink:0;font-weight:700}
 .pkg-card.selected .pkg-features li{color:#7a9bbf}
+.pkg-badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:#1a7fe8;color:#fff;font-size:9px;padding:3px 12px;border-radius:20px;letter-spacing:1px;white-space:nowrap}
 .addon-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .addon-card{border:1px solid #1a2538;border-radius:8px;padding:11px 12px;cursor:pointer;background:#0a0f17;transition:all .15s;display:flex;align-items:flex-start;gap:10px}
 .addon-card:hover{border-color:#1a7fe8}
@@ -165,10 +166,11 @@ function pkgCard(id){
   const p=PKG[id],sel=S.pkg===id,price=p.price[sz()];
   return`<div class="pkg-card${sel?' selected':''}${p.popular?' pop-card':''}" data-pkg="${id}">
     ${p.popular?`<div class="pkg-badge">⭐ MOST POPULAR</div>`:''}
+    <div class="pkg-selected-check">✓</div>
     <div class="pkg-name">${p.name}</div>
-    <div class="pkg-price">$${price}<span class="pkg-price-sub">/ ${szLabel(sz()).toLowerCase()}</span></div>
+    <div class="pkg-price">${price}<span class="pkg-price-sub">/ ${szLabel(sz()).toLowerCase()}</span></div>
     <div class="pkg-divider"></div>
-    <ul class="pkg-features">${p.features.map(f=>f.startsWith('—')?`<li style="color:#1a7fe8;font-weight:700;margin-top:8px;border-top:1px solid #1a2538;padding-top:6px;"><span style="color:#1a7fe8;">${f}</span></li>`:`<li>${f}</li>`).join('')}</ul>
+    <ul class="pkg-features">${p.features.map(f=>f.startsWith('—')?`<li style="color:#1a7fe8;font-weight:700;margin-top:8px;border-top:1px solid #1a2538;padding-top:6px;list-style:none;"><span style="color:#1a7fe8;">${f}</span></li>`:`<li>${f}</li>`).join('')}</ul>
   </div>`;
 }
 
@@ -225,9 +227,9 @@ function step1(){
 
 function step2(){
   const svcs=[
-    {id:'interior',svg:`<path d="M20 60 Q50 30 80 60 L75 75 Q50 65 25 75 Z M35 55 Q50 40 65 55 M42 70 Q50 65 58 70"/>`,label:'Interior Only',desc:'Full interior detail — seats, carpet, surfaces & more.'},
-    {id:'exterior',svg:`<path d="M10 55 Q15 40 30 38 L40 30 L60 30 L70 38 Q85 40 90 55 L88 65 L12 65 Z M25 65 Q25 72 32 72 Q39 72 39 65 M61 65 Q61 72 68 72 Q75 72 75 65 M30 38 L35 30 M70 38 L65 30 M15 52 L85 52"/>`,label:'Exterior Only',desc:'Complete exterior wash, wax & protection.'},
-    {id:'both',svg:`<path d="M10 55 Q15 40 30 38 L40 30 L60 30 L70 38 Q85 40 90 55 L88 65 L12 65 Z M25 65 Q25 72 32 72 Q39 72 39 65 M61 65 Q61 72 68 72 Q75 72 75 65 M30 55 Q50 35 70 55 M38 62 Q50 52 62 62"/>`,label:'Interior + Exterior',desc:'The complete experience — inside and out.',popular:true}
+    {id:'interior',label:'Interior Only',desc:'Full interior detail — seats, carpet, surfaces & more.'},
+    {id:'exterior',label:'Exterior Only',desc:'Complete exterior wash, wax & protection.'},
+    {id:'both',label:'Interior + Exterior',desc:'The complete experience — inside and out.',popular:true}
   ];
   const pkgMap={interior:['int_basic','int_premium'],exterior:['ext_basic','ext_premium'],both:['both_basic','both_premium']};
   const pkgs=S.serviceType?pkgMap[S.serviceType]:[];
@@ -236,7 +238,6 @@ function step2(){
     <div class="svc-grid">
       ${svcs.map(s=>`<div class="svc-card${S.serviceType===s.id?' selected':''}" data-svc="${s.id}">
         ${s.popular?`<div class="badge-pop">MOST POPULAR</div>`:''}
-        <svg class="svc-watermark" width="120" height="120" viewBox="0 0 100 100" fill="white" xmlns="http://www.w3.org/2000/svg">${s.svg}</svg>
         <div class="svc-name">${s.label}</div>
         <div class="svc-desc">${s.desc}</div>
       </div>`).join('')}
