@@ -52,7 +52,9 @@ select option{background:#0a0f17;color:#c8d6e8}
 .pkg-card{border:1px solid #1a2538;border-radius:8px;padding:16px;cursor:pointer;background:#0a0f17;transition:all .15s;position:relative;margin-top:10px}
 .pkg-card:hover{border-color:#1a7fe8}
 .pkg-card.selected{border:1.5px solid #1a7fe8;background:rgba(26,127,232,0.06)}
-.pkg-card.pop-card{border-color:#1a3a6a}
+.pkg-card.pop-card{border-color:#1a7fe8;background:linear-gradient(145deg,#07090d,#0a1628)}
+.pkg-card.pop-card .pkg-name{color:#e8f0fa}
+.pkg-card.pop-card .pkg-price{font-size:22px}
 .pkg-badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:#1a7fe8;color:#fff;font-size:9px;padding:3px 12px;border-radius:20px;letter-spacing:1px;white-space:nowrap}
 .pkg-name{font-size:13px;font-weight:600;color:#c8d6e8;margin-bottom:6px}
 .pkg-price{font-size:20px;font-weight:700;color:#1a7fe8;margin-bottom:10px}
@@ -113,12 +115,12 @@ const STEPS=['Your Info','Vehicle','Service','Add-ons','Schedule','Review'];
 const MAKES=['Acura','Audi','BMW','Buick','Cadillac','Chevrolet','Chrysler','Dodge','Ferrari','Ford','GMC','Genesis','Honda','Hyundai','Infiniti','Jeep','Kia','Land Rover','Lexus','Lincoln','Mazda','Mercedes-Benz','Mitsubishi','Nissan','Porsche','RAM','Subaru','Tesla','Toyota','Volkswagen','Volvo','Other'];
 const BODIES={sedan:['Sedan','Coupe','Convertible','Hatchback'],medium:['SUV','Crossover','Minivan','Wagon'],large:['Truck','Full-Size SUV','Full-Size Van','Sprinter Van']};
 const PKG={
-  int_basic:{name:'Interior Basic',price:{sedan:35,medium:40,large:40},features:['Full vacuum throughout','Wipe down of all surfaces','Interior windows cleaned','Door pockets & cup holders cleaned']},
-  int_premium:{name:'Interior Premium',popular:true,price:{sedan:80,medium:100,large:120},features:['Everything in Interior Basic','Full interior scrub down','Rubber mat clean & protection','Carpet shampoo & hot water extraction','Partial stain removal (cloth seats)','UV protection for leather & upholstery','Fresh interior scent applied']},
-  ext_basic:{name:'Exterior Basic',price:{sedan:55,medium:70,large:85},features:['Pre-wash treatment','Hand wash','Rim face & tire clean','Fender cleaned','Ceramic wax applied','Towel & blow dry finish','Tire shine']},
-  ext_premium:{name:'Exterior Premium',popular:true,price:{sedan:100,medium:125,large:150},features:['Everything in Exterior Basic','Wheel well deep clean','Bug removal','Exterior trim restoration','Door jambs cleaned','Windows cleaned inside & out']},
-  both_basic:{name:'Basic Full Detail',price:{sedan:90,medium:110,large:125},features:['— EXTERIOR —','Pre-wash treatment','Hand wash','Rim face & tire clean','Fender cleaned','Ceramic wax applied','Towel & blow dry finish','Tire shine','— INTERIOR —','Full vacuum throughout','Wipe down of all surfaces','Interior windows cleaned','Door pockets & cup holders cleaned']},
-  both_premium:{name:'Premium Full Detail',popular:true,price:{sedan:180,medium:225,large:270},features:['— EXTERIOR —','Pre-wash & hand wash','Rim face & tire clean','Fender & wheel well deep clean','Bug removal','Exterior trim restoration','Door jambs cleaned','Windows cleaned inside & out','Ceramic wax, towel & blow dry','Tire shine','— INTERIOR —','Full interior scrub down','Rubber mat clean & protection','Carpet shampoo & extraction','Partial stain removal (cloth seats)','UV protection for leather & upholstery','Fresh interior scent applied']}
+  int_basic:{name:'Express Refresh',price:{sedan:35,medium:40,large:40},features:['Full vacuum throughout','Wipe down of all surfaces','Interior windows cleaned','Door pockets & cup holders cleaned']},
+  int_premium:{name:'Express Interior Elite',popular:true,price:{sedan:80,medium:100,large:120},features:['Everything in Express Refresh','Full interior scrub down','Rubber mat clean & protection','Carpet shampoo & hot water extraction','Partial stain removal (cloth seats)','UV protection for leather & upholstery','Fresh interior scent applied']},
+  ext_basic:{name:'Express Wash',price:{sedan:55,medium:70,large:85},features:['Pre-wash treatment','Hand wash','Rim face & tire clean','Fender cleaned','Ceramic wax applied','Towel & blow dry finish','Tire shine']},
+  ext_premium:{name:'Express Exterior Elite',popular:true,price:{sedan:100,medium:125,large:150},features:['Everything in Express Wash','Wheel well deep clean','Bug removal','Exterior trim restoration','Door jambs cleaned','Windows cleaned inside & out']},
+  both_basic:{name:'Express Detail',price:{sedan:90,medium:110,large:125},features:['— EXTERIOR —','Pre-wash treatment','Hand wash','Rim face & tire clean','Fender cleaned','Ceramic wax applied','Towel & blow dry finish','Tire shine','— INTERIOR —','Full vacuum throughout','Wipe down of all surfaces','Interior windows cleaned','Door pockets & cup holders cleaned']},
+  both_premium:{name:'Express Signature Detail',popular:true,price:{sedan:180,medium:225,large:270},features:['— EXTERIOR —','Pre-wash & hand wash','Rim face & tire clean','Fender & wheel well deep clean','Bug removal','Exterior trim restoration','Door jambs cleaned','Windows cleaned inside & out','Ceramic wax, towel & blow dry','Tire shine','— INTERIOR —','Full interior scrub down','Rubber mat clean & protection','Carpet shampoo & extraction','Partial stain removal (cloth seats)','UV protection for leather & upholstery','Fresh interior scent applied']}
 };
 const ADDONS={
   bug:{name:'Bug Removal',desc:'Removes bug splatter from paint & trim.',price:{sedan:10,medium:15,large:20},ext:true,notWith:['ext_premium','both_premium']},
