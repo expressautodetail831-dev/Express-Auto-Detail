@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Express Auto Detail — Book Now</title>
-<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:sans-serif;background:#000;min-height:100vh;padding:16px}
@@ -74,4 +73,359 @@ select option{background:#0a0f17;color:#c8d6e8}
 .svc-desc{font-size:10px;color:#2a4a6a;margin-top:6px;line-height:1.6;position:relative;z-index:1}
 .svc-card.selected .svc-desc{color:#4a6a8a}
 .badge-pop{display:inline-block;font-size:9px;background:#1a7fe8;color:#fff;border-radius:3px;padding:2px 7px;margin-bottom:8px;letter-spacing:1px;position:relative;z-index:1}
-.pkg-grid{display:grid;grid-template
+.pkg-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+.pkg-card{border:1px solid #1a2538;border-radius:12px;padding:16px;cursor:pointer;background:#0a0f17;transition:all .2s;position:relative;margin-top:10px}
+.pkg-card:hover{border-color:#1a7fe8;transform:translateY(-1px)}
+.pkg-card.selected{border:2px solid #1a7fe8;background:rgba(26,127,232,0.12);transform:translateY(-1px);box-shadow:0 0 20px rgba(26,127,232,0.2)}
+.pkg-card.pop-card{border-color:#1a3a6a;background:linear-gradient(145deg,#07090d,#0a1628)}
+.pkg-card.pop-card.selected{border:2px solid #1a7fe8;background:rgba(26,127,232,0.15);box-shadow:0 0 24px rgba(26,127,232,0.3)}
+.pkg-selected-check{display:none;position:absolute;top:10px;right:10px;width:22px;height:22px;background:#1a7fe8;border-radius:50%;align-items:center;justify-content:center;font-size:12px;color:#fff}
+.pkg-card.selected .pkg-selected-check{display:flex}
+.pkg-badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:#1a7fe8;color:#fff;font-size:9px;padding:3px 12px;border-radius:20px;letter-spacing:1px;white-space:nowrap}
+.pkg-name{font-size:13px;font-weight:700;color:#c8d6e8;margin-bottom:4px;padding-right:28px}
+.pkg-price{font-size:18px;font-weight:700;color:#1a7fe8;margin-bottom:8px}
+.pkg-price-sub{font-size:10px;color:#2a4a6a;font-weight:400;margin-left:2px}
+.pkg-divider{height:1px;background:#1a2538;margin:8px 0}
+.pkg-features{list-style:none}
+.pkg-features li{font-size:11px;color:#4a6a8a;padding:2.5px 0;display:flex;align-items:flex-start;gap:6px;line-height:1.4}
+.pkg-features li::before{content:'✓';color:#1a7fe8;font-size:11px;flex-shrink:0;font-weight:700}
+.pkg-card.selected .pkg-features li{color:#7a9bbf}
+.addon-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.addon-card{border:1px solid #1a2538;border-radius:10px;padding:14px;cursor:pointer;background:#0a0f17;transition:all .15s;display:flex;align-items:flex-start;gap:10px;min-height:44px}
+.addon-card:hover{border-color:#1a7fe8}
+.addon-card.selected{border-color:#1a7fe8;background:rgba(26,127,232,0.06)}
+.addon-card:active{transform:scale(0.98)}
+.addon-cb{width:16px;height:16px;border:1.5px solid #1a3a6a;border-radius:3px;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff}
+.addon-card.selected .addon-cb{background:#1a7fe8;border-color:#1a7fe8}
+.addon-name{font-size:12px;font-weight:600;color:#8aa8c8}
+.addon-desc{font-size:10px;color:#2a4a6a;margin-top:2px;line-height:1.4}
+.addon-price{font-size:11px;color:#1a7fe8;margin-top:5px;font-weight:600}
+.note-box{background:rgba(26,127,232,0.07);border-left:2px solid #1a7fe8;border-radius:0 8px 8px 0;padding:10px 14px;font-size:11px;color:#4a6a8a;margin-top:12px;line-height:1.6}
+.size-chip{display:inline-block;font-size:10px;background:rgba(26,127,232,0.12);color:#1a7fe8;border-radius:3px;padding:2px 7px;margin-left:6px;letter-spacing:1px;text-transform:uppercase}
+.sum-row{display:flex;justify-content:space-between;align-items:flex-start;padding:8px 0;border-bottom:1px solid #0f1825;gap:12px}
+.sum-row:last-child{border-bottom:none}
+.sum-label{color:#2a4a6a;font-size:11px;flex-shrink:0}
+.sum-val{color:#8aa8c8;font-size:11px;text-align:right}
+.sum-total{display:flex;justify-content:space-between;align-items:center;padding:14px 0 0;font-size:15px;font-weight:700;color:#1a7fe8;margin-top:6px;border-top:1px solid #1a2538}
+.nav-row{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:#07090d;border-top:1px solid #1a2538;z-index:100}
+.btn-next{padding:13px 32px;background:#1a7fe8;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;text-transform:uppercase;transition:background .15s;flex:1;margin-left:10px}
+.btn-next:hover{background:#1260b8}
+.btn-next:active{background:#0f4e9a;transform:scale(0.98)}
+.btn-back{padding:13px 20px;background:transparent;color:#2a4a6a;border:1px solid #1a2538;border-radius:10px;font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.btn-back:hover{border-color:#1a7fe8;color:#1a7fe8}
+.btn-back:active{transform:scale(0.98)}
+.confirm-wrap{text-align:center;padding:2.5rem 1rem}
+.confirm-ring{width:72px;height:72px;border-radius:50%;border:2px solid #1a7fe8;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;font-size:32px;color:#1a7fe8}
+.calendly-wrap{background:#07090d;border:1px solid #1a2538;border-radius:16px;overflow:hidden;margin-bottom:1.25rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <img class="logo-img" src="https://i.imgur.com/o8Q1gvy.png" alt="Express Auto Detail logo">
+    <div class="header-text">
+      <div class="brand"><span>EXPRESS</span> AUTO DETAIL</div>
+      <div class="sub">MOBILE DETAILING — WE COME TO YOU</div>
+    </div>
+  </div>
+  <div class="progress" id="progress"></div>
+  <div id="form-body"></div>
+</div>
+
+<script>
+const STEPS=['Your Info','Vehicle','Service','Add-ons','Schedule','Review'];
+const MAKES=['Acura','Audi','BMW','Buick','Cadillac','Chevrolet','Chrysler','Dodge','Ferrari','Ford','GMC','Genesis','Honda','Hyundai','Infiniti','Jeep','Kia','Land Rover','Lexus','Lincoln','Mazda','Mercedes-Benz','Mitsubishi','Nissan','Porsche','RAM','Subaru','Tesla','Toyota','Volkswagen','Volvo','Other'];
+const BODIES={sedan:['Sedan','Coupe','Convertible','Hatchback'],medium:['SUV','Crossover','Minivan','Wagon'],large:['Truck','Full-Size SUV','Full-Size Van','Sprinter Van']};
+const PKG={
+  int_basic:{name:'Express Refresh',price:{sedan:35,medium:40,large:40},features:['Full vacuum throughout','Wipe down of all surfaces','Interior windows cleaned','Door pockets & cup holders cleaned']},
+  int_premium:{name:'Express Interior Elite',popular:true,price:{sedan:80,medium:100,large:120},features:['Everything in Express Refresh','Full interior scrub down','Rubber mat clean & protection','Carpet shampoo & hot water extraction','Partial stain removal (cloth seats)','UV protection for leather & upholstery','Fresh interior scent applied']},
+  ext_basic:{name:'Express Wash',price:{sedan:55,medium:70,large:85},features:['Pre-wash treatment','Hand wash','Rim face & tire clean','Fender cleaned','Ceramic wax applied','Towel & blow dry finish','Tire shine']},
+  ext_premium:{name:'Express Exterior Elite',popular:true,price:{sedan:100,medium:125,large:150},features:['Everything in Express Wash','Wheel well deep clean','Bug removal','Exterior trim restoration','Door jambs cleaned','Windows cleaned inside & out']},
+  both_basic:{name:'Express Detail',price:{sedan:90,medium:110,large:125},features:['— EXTERIOR —','Pre-wash treatment','Hand wash','Rim face & tire clean','Fender cleaned','Ceramic wax applied','Towel & blow dry finish','Tire shine','— INTERIOR —','Full vacuum throughout','Wipe down of all surfaces','Interior windows cleaned','Door pockets & cup holders cleaned']},
+  both_premium:{name:'Express Signature Detail',popular:true,price:{sedan:180,medium:225,large:270},features:['— EXTERIOR —','Pre-wash & hand wash','Rim face & tire clean','Fender & wheel well deep clean','Bug removal','Exterior trim restoration','Door jambs cleaned','Windows cleaned inside & out','Ceramic wax, towel & blow dry','Tire shine','— INTERIOR —','Full interior scrub down','Rubber mat clean & protection','Carpet shampoo & extraction','Partial stain removal (cloth seats)','UV protection for leather & upholstery','Fresh interior scent applied']}
+};
+const ADDONS={
+  bug:{name:'Bug Removal',desc:'Removes bug splatter from paint & trim.',price:{sedan:10,medium:15,large:20},ext:true,notWith:['ext_premium','both_premium']},
+  wax:{name:'Hand Wax & Polish',desc:'Deep hand-applied wax for enhanced shine.',price:{sedan:35,medium:45,large:55},ext:true,oldOnly:true},
+  sealant:{name:'Enhanced Ceramic Sealant',desc:'Long-lasting paint protection with deep gloss.',price:{sedan:50,medium:65,large:80},ext:true,newOnly:true},
+  hl:{name:'Headlight Restoration',desc:'Restores clarity and improves night visibility.',flat:50,ext:true,oldOnly:true},
+  rain:{name:'Rain Repellent Window Treatment',desc:'Water beads off glass for safer wet-weather driving.',price:{sedan:20,medium:25,large:30},ext:true},
+  trim:{name:'Trim Restoration',desc:'Restores faded exterior plastic trim to like-new.',price:{sedan:20,medium:30,large:40},ext:true,notWith:['ext_premium','both_premium']},
+  stain:{name:'Stain Extraction',desc:'Targeted hot-water extraction for stubborn cloth seat stains.',price:{sedan:25,medium:35,large:45},int:true,notWith:['int_premium','both_premium']},
+  fabric:{name:'Interior Fabric Protection',desc:'Guards fabric against future stains and spills.',price:{sedan:30,medium:40,large:50},int:true},
+  leather:{name:'Leather Protection Top Coat',desc:'Conditions and shields leather from UV and cracking.',price:{sedan:30,medium:40,large:50},int:true},
+  pet:{name:'Pet Hair Removal',desc:'Deep removal of embedded pet hair from seats & carpet.',price:{sedan:20,medium:30,large:40},int:true},
+  ozone:{name:'Ozone Odor Elimination',desc:'Professional ozone generator permanently destroys odors — smoke, pets, mildew & more.',price:'special',int:true}
+};
+
+let S={step:0,name:'',phone:'',email:'',address:'',water:null,electric:null,year:'',make:'',model:'',bodyType:'',vehicleSize:'',serviceType:'',pkg:'',addons:[],notes:''};
+
+const sz=()=>S.vehicleSize||'sedan';
+const pkgPrice=id=>PKG[id]?.price[sz()]||0;
+const adPrice=id=>{const a=ADDONS[id];if(!a)return 0;if(a.flat)return a.flat;if(id==='ozone')return(S.pkg==='int_premium'||S.pkg==='both_premium')?50:75;return a.price[sz()]||0;};
+const waterFee=()=>S.water===false?15:0;
+const elecFee=()=>S.electric===false?10:0;
+const total=()=>{let t=pkgPrice(S.pkg);S.addons.forEach(id=>{t+=adPrice(id);});t+=waterFee()+elecFee();return t;};
+const getSize=b=>{for(const[k,v]of Object.entries(BODIES)){if(v.includes(b))return k;}return'';};
+const isOld=()=>new Date().getFullYear()-(parseInt(S.year)||new Date().getFullYear())>=10;
+const szLabel=s=>s==='sedan'?'Small':s==='medium'?'Medium':'Large';
+
+function renderProgress(){
+  document.getElementById('progress').innerHTML=STEPS.map((s,i)=>{
+    const cls=i<S.step?'done':i===S.step?'active':'';
+    const line=i<STEPS.length-1?`<div class="s-line${i<S.step?' done':''}"></div>`:'';
+    return`<div class="s-dot ${cls}" title="${s}">${i<S.step?'✓':i+1}</div>${line}`;
+  }).join('');
+}
+
+function pkgCard(id){
+  const p=PKG[id],sel=S.pkg===id,price=p.price[sz()];
+  return`<div class="pkg-card${sel?' selected':''}${p.popular?' pop-card':''}" data-pkg="${id}">
+    ${p.popular?`<div class="pkg-badge">⭐ MOST POPULAR</div>`:''}
+    <div class="pkg-selected-check">✓</div>
+    <div class="pkg-name">${p.name}</div>
+    <div class="pkg-price">$${price}<span class="pkg-price-sub">/ ${szLabel(sz()).toLowerCase()}</span></div>
+    <div class="pkg-divider"></div>
+    <ul class="pkg-features">${p.features.map(f=>f.startsWith('—')?`<li style="color:#1a7fe8;font-weight:700;margin-top:8px;border-top:1px solid #1a2538;padding-top:6px;display:block;">${f}</li>`:`<li>${f}</li>`).join('')}</ul>
+  </div>`;
+}
+
+function step0(){
+  return`<div class="card">
+    <div class="card-title">Contact Information</div>
+    <label class="first">Full Name</label><input id="f-name" value="${S.name}" placeholder="Jane Smith">
+    <div class="row2">
+      <div><label>Phone Number</label><input id="f-phone" type="tel" value="${S.phone}" placeholder="(555) 000-0000"></div>
+      <div><label>Email <span style="color:#1a3a6a;font-size:10px;text-transform:none;letter-spacing:0;">(optional)</span></label><input id="f-email" type="email" value="${S.email}" placeholder="jane@email.com"></div>
+    </div>
+    <label>Service Location</label>
+    <input id="f-addr" value="${S.address}" placeholder="123 Main St, Hollister, CA 95023">
+  </div>
+  <div class="card">
+    <div class="card-title">Location Utilities</div>
+    <label class="first">Water access available?</label>
+    <div class="util-row">
+      <div class="util-btn${S.water===true?' yes':''}" id="wy"><div class="util-icon y">💧</div><div><div class="util-label">Yes — water available</div><div class="util-sub">Hose or outdoor spigot on site</div></div></div>
+      <div class="util-btn${S.water===false?' no':''}" id="wn"><div class="util-icon n">🚫</div><div><div class="util-label">No — please bring water</div><div class="util-sub">$15 supply fee applies</div></div></div>
+    </div>
+    <label>Electricity available?</label>
+    <div class="util-row">
+      <div class="util-btn${S.electric===true?' yes':''}" id="ey"><div class="util-icon y">⚡</div><div><div class="util-label">Yes — power available</div><div class="util-sub">Outdoor outlet nearby</div></div></div>
+      <div class="util-btn${S.electric===false?' no':''}" id="en"><div class="util-icon n">🚫</div><div><div class="util-label">No — please bring power</div><div class="util-sub">$10 supply fee applies</div></div></div>
+    </div>
+  </div>
+  <div class="nav-row"><div></div><button class="btn-next" id="btn-next">Next Step →</button></div>`;
+}
+
+function step1(){
+  const years=Array.from({length:40},(_,i)=>new Date().getFullYear()-i);
+  return`<div class="card">
+    <div class="card-title">Vehicle Information</div>
+    <div class="row3">
+      <div><label class="first">Year</label><select id="f-year"><option value="">Year</option>${years.map(y=>`<option${S.year==y?' selected':''}>${y}</option>`).join('')}</select></div>
+      <div><label class="first">Make</label><select id="f-make"><option value="">Make</option>${MAKES.map(m=>`<option${S.make===m?' selected':''}>${m}</option>`).join('')}</select></div>
+      <div><label class="first">Model</label><input id="f-model" value="${S.model}" placeholder="Camry"></div>
+    </div>
+    <label>Body Type</label>
+    <select id="f-body">
+      <option value="">Select body type</option>
+      <optgroup label="Small — Sedan / Coupe">${BODIES.sedan.map(b=>`<option${S.bodyType===b?' selected':''}>${b}</option>`).join('')}</optgroup>
+      <optgroup label="Medium — SUV / Crossover">${BODIES.medium.map(b=>`<option${S.bodyType===b?' selected':''}>${b}</option>`).join('')}</optgroup>
+      <optgroup label="Large — Truck / Full-Size">${BODIES.large.map(b=>`<option${S.bodyType===b?' selected':''}>${b}</option>`).join('')}</optgroup>
+    </select>
+    ${S.vehicleSize?`<div class="note-box">✓ Vehicle categorized as <strong style="color:#1a7fe8;">${szLabel(S.vehicleSize)}</strong> — pricing adjusted automatically.</div>`:''}
+  </div>
+  <div class="nav-row">
+    <button class="btn-back" id="btn-back">← Back</button>
+    <button class="btn-next" id="btn-next">Next Step →</button>
+  </div>`;
+}
+
+function step2(){
+  const svcs=[
+    {id:'interior',label:'Interior Only',desc:'Full interior detail — seats, carpet, surfaces & more.'},
+    {id:'exterior',label:'Exterior Only',desc:'Complete exterior wash, wax & protection.'},
+    {id:'both',label:'Interior + Exterior',desc:'The complete experience — inside and out.',popular:true}
+  ];
+  const pkgMap={interior:['int_basic','int_premium'],exterior:['ext_basic','ext_premium'],both:['both_basic','both_premium']};
+  const pkgs=S.serviceType?pkgMap[S.serviceType]:[];
+  return`<div class="card">
+    <div class="card-title">What Would You Like Done?</div>
+    <div class="svc-grid">
+      ${svcs.map(s=>`<div class="svc-card${S.serviceType===s.id?' selected':''}" data-svc="${s.id}">
+        ${s.popular?`<div class="badge-pop">MOST POPULAR</div>`:''}
+        <div class="svc-name">${s.label}</div>
+        <div class="svc-desc">${s.desc}</div>
+      </div>`).join('')}
+    </div>
+  </div>
+  ${pkgs.length?`<div class="card">
+    <div class="card-title">Choose Your Package</div>
+    <div class="pkg-grid">${pkgs.map(id=>pkgCard(id)).join('')}</div>
+  </div>`:''}
+  <div class="nav-row">
+    <button class="btn-back" id="btn-back">← Back</button>
+    <button class="btn-next" id="btn-next">Next Step →</button>
+  </div>`;
+}
+
+function step3(){
+  const old=isOld(),hasInt=S.serviceType==='interior'||S.serviceType==='both',hasExt=S.serviceType==='exterior'||S.serviceType==='both',hasPremInt=S.pkg==='int_premium'||S.pkg==='both_premium';
+  const eligible=Object.entries(ADDONS).filter(([id,a])=>{
+    if(a.notWith&&a.notWith.includes(S.pkg))return false;
+    if(a.ext&&!hasExt)return false;
+    if(a.int&&!hasInt)return false;
+    if(a.oldOnly&&!old)return false;
+    if(a.newOnly&&old)return false;
+    return true;
+  });
+  const ap=([id,a])=>{if(a.flat)return`$${a.flat} flat`;if(id==='ozone')return hasPremInt?'$50 — Premium discount':'$75';return`+$${a.price[sz()]}`;};
+  return`<div class="card">
+    <div class="card-title">Recommended Add-Ons</div>
+    ${eligible.length===0?`<p style="font-size:12px;color:#2a4a6a;text-align:center;padding:1.5rem 0;">✓ Your package already covers everything!</p>`:''}
+    <div class="addon-grid">
+      ${eligible.map(([id,a])=>`<div class="addon-card${S.addons.includes(id)?' selected':''}" data-addon="${id}">
+        <div class="addon-cb">${S.addons.includes(id)?'✓':''}</div>
+        <div><div class="addon-name">${a.name}</div><div class="addon-desc">${a.desc}</div><div class="addon-price">${ap([id,a])}</div></div>
+      </div>`).join('')}
+    </div>
+    ${hasPremInt&&eligible.find(([id])=>id==='ozone')?`<div class="note-box">🎉 Ozone treatment discounted to <strong style="color:#1a7fe8;">$50</strong> with Elite Interior — save $25!</div>`:''}
+  </div>
+  <div class="nav-row">
+    <button class="btn-back" id="btn-back">← Back</button>
+    <button class="btn-next" id="btn-next">Next Step →</button>
+  </div>`;
+}
+
+function step4(){
+  return`<div class="card">
+    <div class="card-title">Pick Your Date & Time</div>
+    <p style="font-size:12px;color:#4a6a8a;margin-bottom:6px;line-height:1.6;">Select a date and time that works for you. Your appointment will be confirmed automatically.</p>
+  </div>
+  <div class="calendly-wrap">
+    <div class="calendly-inline-widget" data-url="https://calendly.com/expressautodetail831/30min?hide_gdpr_banner=1&background_color=07090d&text_color=c8d6e8&primary_color=1a7fe8&hide_event_type_details=1&prefill_name=${encodeURIComponent(S.name)}&prefill_email=${encodeURIComponent(S.email)}" style="min-width:320px;height:700px;"></div>
+  </div>
+  <div class="nav-row">
+    <button class="btn-back" id="btn-back">← Back</button>
+    <button class="btn-next" id="btn-next">Review Booking →</button>
+  </div>`;
+}
+
+function step5(){
+  const p=PKG[S.pkg];
+  return`<div class="card">
+    <div class="card-title">Contact & Location</div>
+    <div class="sum-row"><span class="sum-label">Name</span><span class="sum-val">${S.name}</span></div>
+    <div class="sum-row"><span class="sum-label">Phone</span><span class="sum-val">${S.phone}</span></div>
+    ${S.email?`<div class="sum-row"><span class="sum-label">Email</span><span class="sum-val">${S.email}</span></div>`:''}
+    <div class="sum-row"><span class="sum-label">Address</span><span class="sum-val">${S.address}</span></div>
+    <div class="sum-row"><span class="sum-label">Water</span><span class="sum-val">${S.water?'Available on-site':'We bring ($15 fee)'}</span></div>
+    <div class="sum-row"><span class="sum-label">Electricity</span><span class="sum-val">${S.electric?'Available on-site':'We bring ($10 fee)'}</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Vehicle</div>
+    <div class="sum-row"><span class="sum-label">Vehicle</span><span class="sum-val">${S.year} ${S.make} ${S.model}</span></div>
+    <div class="sum-row"><span class="sum-label">Body / Size</span><span class="sum-val">${S.bodyType} <span class="size-chip">${szLabel(S.vehicleSize)}</span></span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Appointment</div>
+    <div class="sum-row"><span class="sum-label">Scheduling</span><span class="sum-val" style="color:#1a7fe8;">Booked via Calendly — check your email for confirmation</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Pricing Breakdown</div>
+    <div class="sum-row"><span class="sum-label">${p?.name}</span><span class="sum-val" style="color:#1a7fe8;">$${pkgPrice(S.pkg)}</span></div>
+    ${S.addons.map(id=>`<div class="sum-row"><span class="sum-label">${ADDONS[id].name}</span><span class="sum-val" style="color:#1a7fe8;">$${adPrice(id)}</span></div>`).join('')}
+    ${waterFee()?`<div class="sum-row"><span class="sum-label">Water Supply Fee</span><span class="sum-val" style="color:#1a7fe8;">$15</span></div>`:''}
+    ${elecFee()?`<div class="sum-row"><span class="sum-label">Electricity Supply Fee</span><span class="sum-val" style="color:#1a7fe8;">$10</span></div>`:''}
+    <div class="sum-total"><span>Estimated Total</span><span>$${total()}</span></div>
+    <p style="font-size:10px;color:#1a3a6a;margin-top:10px;line-height:1.6;">Final pricing confirmed upon arrival. May vary based on vehicle condition.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn-back" id="btn-back">← Back</button>
+    <button class="btn-next" id="btn-confirm">Confirm Booking ✓</button>
+  </div>`;
+}
+
+function sendEmail(){
+  const body=`New Booking Request!\n\nNAME: ${S.name}\nPHONE: ${S.phone}\nEMAIL: ${S.email||'Not provided'}\nADDRESS: ${S.address}\n\nVEHICLE: ${S.year} ${S.make} ${S.model}\nSIZE: ${S.bodyType} (${szLabel(S.vehicleSize)})\n\nSERVICE: ${PKG[S.pkg]?.name||'—'}\nADD-ONS: ${S.addons.length?S.addons.map(id=>ADDONS[id].name).join(', '):'None'}\n\nWATER: ${S.water?'Available on-site':'Need to bring ($15 fee)'}\nELECTRICITY: ${S.electric?'Available on-site':'Need to bring ($10 fee)'}\n\nESTIMATED TOTAL: $${total()}`;
+  fetch('https://formspree.io/f/xzdwdeae',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify({name:S.name,email:S.email||'noreply@expressautodetail.com',message:body})
+  }).then(r=>r.json()).then(d=>console.log('Sent:',d)).catch(e=>console.error(e));
+}
+
+function showConfirm(){
+  sendEmail();
+  document.getElementById('progress').innerHTML=STEPS.map((_,i)=>{
+    const line=i<STEPS.length-1?`<div class="s-line done"></div>`:'';
+    return`<div class="s-dot done">✓</div>${line}`;
+  }).join('');
+  document.getElementById('form-body').innerHTML=`<div class="card confirm-wrap">
+    <div class="confirm-ring">✓</div>
+    <div style="font-size:18px;font-weight:700;color:#c8d6e8;margin-bottom:10px;letter-spacing:1px;">BOOKING REQUEST RECEIVED!</div>
+    <div style="font-size:13px;color:#4a6a8a;line-height:1.8;max-width:400px;margin:0 auto 1.5rem;">Thank you, <strong style="color:#c8d6e8;">${S.name.split(' ')[0]}</strong>! We've received your request for your <strong style="color:#c8d6e8;">${S.year} ${S.make} ${S.model}</strong>.</div>
+    <div class="note-box" style="text-align:left;max-width:400px;margin:0 auto 10px;">📞 We'll reach out to <strong style="color:#1a7fe8;">${S.phone}</strong> within 24 hours to confirm your appointment.</div>
+    <div class="note-box" style="text-align:left;max-width:400px;margin:0 auto;">💰 Estimated total: <strong style="color:#1a7fe8;">$${total()}</strong> — final price confirmed on arrival.</div>
+  </div>`;
+}
+
+function render(){
+  renderProgress();
+  const map=[step0,step1,step2,step3,step4,step5];
+  document.getElementById('form-body').innerHTML=map[S.step]();
+  bind();
+}
+
+function bind(){
+  const next=document.getElementById('btn-next');
+  const back=document.getElementById('btn-back');
+  const confirm=document.getElementById('btn-confirm');
+  if(back)back.onclick=()=>{S.step--;render();};
+  if(confirm)confirm.onclick=()=>showConfirm();
+  if(S.step===0){
+    const saveFields=()=>{S.name=document.getElementById('f-name').value;S.phone=document.getElementById('f-phone').value;S.email=document.getElementById('f-email').value;S.address=document.getElementById('f-addr').value;};
+    document.getElementById('wy').onclick=()=>{saveFields();S.water=true;render();};
+    document.getElementById('wn').onclick=()=>{saveFields();S.water=false;render();};
+    document.getElementById('ey').onclick=()=>{saveFields();S.electric=true;render();};
+    document.getElementById('en').onclick=()=>{saveFields();S.electric=false;render();};
+    if(next)next.onclick=()=>{
+      S.name=document.getElementById('f-name').value.trim();
+      S.phone=document.getElementById('f-phone').value.trim();
+      S.email=document.getElementById('f-email').value.trim();
+      S.address=document.getElementById('f-addr').value.trim();
+      if(!S.name||!S.phone||!S.address){alert('Please enter your name, phone number, and service address.');return;}
+      S.step++;render();
+    };
+  }
+  if(S.step===1){
+    const bodyEl=document.getElementById('f-body');
+    if(bodyEl)bodyEl.onchange=()=>{S.year=document.getElementById('f-year').value;S.make=document.getElementById('f-make').value;S.model=document.getElementById('f-model').value;S.bodyType=bodyEl.value;S.vehicleSize=getSize(bodyEl.value);render();};
+    if(next)next.onclick=()=>{
+      S.year=document.getElementById('f-year').value;S.make=document.getElementById('f-make').value;S.model=document.getElementById('f-model').value;S.bodyType=document.getElementById('f-body').value;S.vehicleSize=getSize(S.bodyType);
+      if(!S.year||!S.make||!S.model||!S.bodyType){alert('Please complete all vehicle details.');return;}
+      S.step++;render();
+    };
+  }
+  if(S.step===2){
+    document.querySelectorAll('[data-svc]').forEach(el=>el.onclick=()=>{S.serviceType=el.dataset.svc;S.pkg='';S.addons=[];render();});
+    document.querySelectorAll('[data-pkg]').forEach(el=>el.onclick=()=>{S.pkg=el.dataset.pkg;S.addons=[];render();});
+    if(next)next.onclick=()=>{
+      if(!S.serviceType){alert('Please select a service type.');return;}
+      if(!S.pkg){alert('Please choose a package.');return;}
+      S.step++;render();
+    };
+  }
+  if(S.step===3){
+    document.querySelectorAll('[data-addon]').forEach(el=>el.onclick=()=>{const id=el.dataset.addon;S.addons=S.addons.includes(id)?S.addons.filter(a=>a!==id):[...S.addons,id];render();});
+    if(next)next.onclick=()=>{S.step++;render();};
+  }
+  if(S.step===4){
+    if(next)next.onclick=()=>{S.step++;render();};
+  }
+}
+render();
+</script>
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript"></script>
+</body>
+</html>
