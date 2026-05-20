@@ -20,11 +20,11 @@ body{font-family:sans-serif;background:#000;min-height:100vh;padding:20px}
 .s-dot.done{border-color:#1a7fe8;background:transparent;color:#1a7fe8}
 .s-line{flex:1;height:1px;background:#1e2a3a}
 .s-line.done{background:#1a7fe8}
-.card{background:#07090d;border:1px solid #1a2538;border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1rem}
-.card-title{font-size:11px;font-weight:600;color:#1a7fe8;letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem}
-label{font-size:11px;color:#4a6a8a;letter-spacing:0.8px;text-transform:uppercase;display:block;margin-bottom:5px;margin-top:14px}
+.card{background:#07090d;border:1px solid #1a2538;border-radius:16px;padding:1.75rem 1.75rem;margin-bottom:1.25rem}
+.card-title{font-size:11px;font-weight:600;color:#1a7fe8;letter-spacing:2px;text-transform:uppercase;margin-bottom:1.25rem}
+label{font-size:11px;color:#4a6a8a;letter-spacing:0.8px;text-transform:uppercase;display:block;margin-bottom:6px;margin-top:18px}
 label.first{margin-top:0}
-input,select,textarea{width:100%;font-size:13px;padding:9px 12px;border:1px solid #1a2538;border-radius:8px;background:#0a0f17;color:#c8d6e8;outline:none;font-family:sans-serif}
+input,select,textarea{width:100%;font-size:14px;padding:11px 14px;border:1px solid #1a2538;border-radius:10px;background:#0a0f17;color:#c8d6e8;outline:none;font-family:sans-serif}
 input:focus,select:focus,textarea:focus{border-color:#1a7fe8;box-shadow:0 0 0 3px rgba(26,127,232,0.1)}
 select option{background:#0a0f17;color:#c8d6e8}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -39,14 +39,19 @@ select option{background:#0a0f17;color:#c8d6e8}
 .util-icon.n{background:rgba(127,29,29,0.15)}
 .util-label{font-size:12px;color:#c8d6e8;font-weight:600}
 .util-sub{font-size:10px;color:#2a4a6a;margin-top:2px}
-.svc-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-.svc-card{border:1px solid #1a2538;border-radius:8px;padding:16px 12px;cursor:pointer;background:#0a0f17;transition:all .15s;text-align:center;position:relative}
-.svc-card:hover{border-color:#1a7fe8}
-.svc-card.selected{border-color:#1a7fe8;background:rgba(26,127,232,0.07)}
-.svc-icon{font-size:22px;margin-bottom:8px;display:block}
-.svc-name{font-size:12px;font-weight:600;color:#8aa8c8}
-.svc-card.selected .svc-name{color:#c8d6e8}
-.svc-desc{font-size:10px;color:#2a4a6a;margin-top:5px;line-height:1.5}
+.svc-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.svc-card{border:1px solid #1a2538;border-radius:12px;padding:28px 16px 20px;cursor:pointer;background:#0a0f17;transition:all .2s;text-align:center;position:relative;overflow:hidden;min-height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.svc-card::before{content:'';position:absolute;inset:0;opacity:0;background:linear-gradient(135deg,rgba(26,127,232,0.08),transparent);transition:opacity .2s}
+.svc-card:hover{border-color:#1a7fe8;transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,127,232,0.12)}
+.svc-card:hover::before{opacity:1}
+.svc-card.selected{border-color:#1a7fe8;background:rgba(26,127,232,0.07);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,127,232,0.15)}
+.svc-card.selected::before{opacity:1}
+.svc-watermark{position:absolute;opacity:0.04;bottom:-10px;right:-10px;transition:opacity .2s}
+.svc-card:hover .svc-watermark,.svc-card.selected .svc-watermark{opacity:0.08}
+.svc-name{font-size:13px;font-weight:700;color:#8aa8c8;letter-spacing:0.5px;position:relative;z-index:1}
+.svc-card.selected .svc-name{color:#e8f0fa}
+.svc-desc{font-size:10px;color:#2a4a6a;margin-top:6px;line-height:1.6;position:relative;z-index:1}
+.svc-card.selected .svc-desc{color:#4a6a8a}
 .badge-pop{display:inline-block;font-size:9px;background:#1a7fe8;color:#fff;border-radius:3px;padding:2px 7px;margin-bottom:8px;letter-spacing:1px}
 .pkg-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
 .pkg-card{border:1px solid #1a2538;border-radius:8px;padding:16px;cursor:pointer;background:#0a0f17;transition:all .15s;position:relative;margin-top:10px}
@@ -173,7 +178,7 @@ function step0(){
     <label class="first">Full Name</label><input id="f-name" value="${S.name}" placeholder="Jane Smith">
     <div class="row2">
       <div><label>Phone Number</label><input id="f-phone" type="tel" value="${S.phone}" placeholder="(555) 000-0000"></div>
-      <div><label>Email Address</label><input id="f-email" type="email" value="${S.email}" placeholder="jane@email.com"></div>
+      <div><label>Email Address <span style="color:#1a3a6a;font-size:10px;text-transform:none;letter-spacing:0;">(optional)</span></label><input id="f-email" type="email" value="${S.email}" placeholder="jane@email.com"></div>
     </div>
     <label>Service Location</label>
     <input id="f-addr" value="${S.address}" placeholder="123 Main St, Hollister, CA 95023">
@@ -220,9 +225,9 @@ function step1(){
 
 function step2(){
   const svcs=[
-    {id:'interior',icon:'🪑',label:'Interior Only',desc:'Full interior detail — seats, carpet, surfaces & more.'},
-    {id:'exterior',icon:'🚗',label:'Exterior Only',desc:'Complete exterior wash, wax & protection.'},
-    {id:'both',icon:'✨',label:'Interior + Exterior',desc:'The complete experience — inside and out.',popular:true}
+    {id:'interior',svg:`<path d="M20 60 Q50 30 80 60 L75 75 Q50 65 25 75 Z M35 55 Q50 40 65 55 M42 70 Q50 65 58 70"/>`,label:'Interior Only',desc:'Full interior detail — seats, carpet, surfaces & more.'},
+    {id:'exterior',svg:`<path d="M10 55 Q15 40 30 38 L40 30 L60 30 L70 38 Q85 40 90 55 L88 65 L12 65 Z M25 65 Q25 72 32 72 Q39 72 39 65 M61 65 Q61 72 68 72 Q75 72 75 65 M30 38 L35 30 M70 38 L65 30 M15 52 L85 52"/>`,label:'Exterior Only',desc:'Complete exterior wash, wax & protection.'},
+    {id:'both',svg:`<path d="M10 55 Q15 40 30 38 L40 30 L60 30 L70 38 Q85 40 90 55 L88 65 L12 65 Z M25 65 Q25 72 32 72 Q39 72 39 65 M61 65 Q61 72 68 72 Q75 72 75 65 M30 55 Q50 35 70 55 M38 62 Q50 52 62 62"/>`,label:'Interior + Exterior',desc:'The complete experience — inside and out.',popular:true}
   ];
   const pkgMap={interior:['int_basic','int_premium'],exterior:['ext_basic','ext_premium'],both:['both_basic','both_premium']};
   const pkgs=S.serviceType?pkgMap[S.serviceType]:[];
@@ -231,7 +236,7 @@ function step2(){
     <div class="svc-grid">
       ${svcs.map(s=>`<div class="svc-card${S.serviceType===s.id?' selected':''}" data-svc="${s.id}">
         ${s.popular?`<div class="badge-pop">MOST POPULAR</div>`:''}
-        <span class="svc-icon">${s.icon}</span>
+        <svg class="svc-watermark" width="120" height="120" viewBox="0 0 100 100" fill="white" xmlns="http://www.w3.org/2000/svg">${s.svg}</svg>
         <div class="svc-name">${s.label}</div>
         <div class="svc-desc">${s.desc}</div>
       </div>`).join('')}
