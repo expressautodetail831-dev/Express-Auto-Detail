@@ -114,6 +114,14 @@ select option{background:#0a0f17;color:#c8d6e8}
 .btn-back{padding:13px 20px;background:transparent;color:#2a4a6a;border:1px solid #1a2538;border-radius:10px;font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap}
 .btn-back:hover{border-color:#1a7fe8;color:#1a7fe8}
 .btn-back:active{transform:scale(0.98)}
+.days-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.day-btn{padding:12px 2px;text-align:center;font-size:11px;font-weight:600;border:1px solid #1a2538;border-radius:10px;cursor:pointer;color:#2a4a6a;background:#0a0f17;transition:all .15s;user-select:none;min-height:44px;display:flex;align-items:center;justify-content:center}
+.day-btn:active{transform:scale(0.95)}
+.day-btn.selected{background:#1a7fe8;color:#fff;border-color:#1a7fe8}
+.time-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.time-btn{padding:14px 6px;text-align:center;font-size:12px;border:1px solid #1a2538;border-radius:10px;cursor:pointer;color:#2a4a6a;background:#0a0f17;transition:all .15s;user-select:none;min-height:44px;display:flex;align-items:center;justify-content:center}
+.time-btn:active{transform:scale(0.95)}
+.time-btn.selected{background:#1a7fe8;color:#fff;border-color:#1a7fe8}
 .confirm-wrap{text-align:center;padding:2.5rem 1rem}
 .confirm-ring{width:72px;height:72px;border-radius:50%;border:2px solid #1a7fe8;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;font-size:32px;color:#1a7fe8}
 .calendly-wrap{background:#07090d;border:1px solid #1a2538;border-radius:16px;overflow:hidden;margin-bottom:1.25rem}
